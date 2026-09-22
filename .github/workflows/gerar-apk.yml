@@ -22,6 +22,127 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Aplicar correção do player Android (-22/0)
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('android/app/src/main/java/br/com/utilitypad/app/PulsarPlaybackService.java')
+          text = path.read_text(encoding='utf-8')
+
+          old = '''            try {
+                          player.setVolume(volume, volume);
+                          player.start();
+                          changed();
+                      } catch (Exception e) {
+                          error("Não foi possível continuar esta música");
+                      }
+          '''
+          new = '''            try {
+                          player.setVolume(volume, volume);
+                          player.start();
+                          createAudioEffects();
+                          changed();
+                      } catch (Exception e) {
+                          error("Não foi possível continuar esta música");
+                      }
+          '''
+          if old not in text:
+              raise SystemExit('Bloco playInternal não encontrado')
+          text = text.replace(old, new, 1)
+
+          old = '''                        applyPlaybackParameters();
+                                  createAudioEffects();
+                                  if (playWhenPrepared && requestAudioFocus()) {
+                                      try { mp.start(); } catch (Exception e) { error("Não foi possível iniciar esta música"); }
+                                  }
+                                  changed();
+          '''
+          new = '''                        applyPlaybackParameters();
+                                  if (playWhenPrepared && requestAudioFocus()) {
+                                      try {
+                                          mp.start();
+                                          createAudioEffects();
+                                      } catch (Exception e) {
+                                          error("Não foi possível iniciar esta música");
+                                      }
+                                  }
+                                  changed();
+          '''
+          if old not in text:
+              raise SystemExit('Bloco onPrepared não encontrado')
+          text = text.replace(old, new, 1)
+
+          old = '''        public synchronized boolean setEqBand(int band, float decibels) {
+                      if (equalizer == null && prepared && player != null) createAudioEffects();
+          '''
+          new = '''        public synchronized boolean setEqBand(int band, float decibels) {
+                      eqEnabled = true;
+                      if (equalizer == null && prepared && player != null) createAudioEffects();
+          '''
+          if old not in text:
+              raise SystemExit('Bloco setEqBand não encontrado')
+          text = text.replace(old, new, 1)
+
+          start = text.index('        private void createAudioEffects() {')
+          end = text.index('        private void releaseEffects() {', start)
+          replacement = '''        private void createAudioEffects() {
+                      releaseEffects();
+                      if (!prepared || player == null) return;
+                      int session = player.getAudioSessionId();
+
+                      if (eqEnabled || !eqLevels.isEmpty()) {
+                          try {
+                              equalizer = new Equalizer(0, session);
+                              short[] range = equalizer.getBandLevelRange();
+                              for (int i = 0; i < Math.min(eqLevels.size(), equalizer.getNumberOfBands()); i++) {
+                                  Float db = eqLevels.get(i);
+                                  if (db == null) continue;
+                                  short level = (short) Math.max(range[0], Math.min(range[1], Math.round(db * 100f)));
+                                  equalizer.setBandLevel((short) i, level);
+                              }
+                              equalizer.setEnabled(eqEnabled);
+                          } catch (Exception e) {
+                              equalizer = null;
+                          }
+                      }
+
+                      if (bassStrength > 0) {
+                          try {
+                              bassBoost = new BassBoost(0, session);
+                              bassBoost.setStrength((short) (bassStrength * 10));
+                              bassBoost.setEnabled(true);
+                          } catch (Exception e) { bassBoost = null; }
+                      }
+
+                      if (virtualizerStrength > 0) {
+                          try {
+                              virtualizer = new Virtualizer(0, session);
+                              virtualizer.setStrength((short) (virtualizerStrength * 10));
+                              virtualizer.setEnabled(true);
+                          } catch (Exception e) { virtualizer = null; }
+                      }
+
+                      if (reverbStrength > 0) {
+                          try {
+                              reverb = new PresetReverb(0, 0);
+                              short preset = reverbStrength < 34 ? PresetReverb.PRESET_SMALLROOM
+                                  : reverbStrength < 67 ? PresetReverb.PRESET_LARGEROOM
+                                  : PresetReverb.PRESET_LARGEHALL;
+                              reverb.setPreset(preset);
+                              reverb.setEnabled(true);
+                              player.attachAuxEffect(reverb.getId());
+                              player.setAuxEffectSendLevel(reverbStrength / 100f);
+                          } catch (Exception e) { reverb = null; }
+                      }
+                  }
+
+          '''
+          text = text[:start] + replacement + text[end:]
+          path.write_text(text, encoding='utf-8')
+          PY
+
       - name: Preparar Node.js 22
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
