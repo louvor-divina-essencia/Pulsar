@@ -1,0 +1,9 @@
+{
+  "appId": "br.com.utilitypad.app",
+  "appName": "PULSAR",
+  "webDir": "web",
+  "android": {
+    "backgroundColor": "#050812",
+    "allowMixedContent": false
+  }
+}

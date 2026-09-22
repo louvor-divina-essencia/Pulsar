@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#070b12" />
+  <title>PULSAR</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="pulsar-2.1.css" />
+</head>
+<body>
+  <div id="pulsarSplash" class="pulsar-splash" aria-hidden="true">
+    <div class="pulsar-splash-aurora"></div>
+    <div class="pulsar-splash-mark">
+      <svg class="pulsar-splash-symbol" viewBox="0 0 100 100" aria-hidden="true">
+        <path class="pulsar-pulse" d="M4 59h18l5-13 8 30 8-39 8 22h6"/>
+        <path class="pulsar-pmark" d="M49 82V23h22c15 0 24 9 24 21s-9 21-24 21H49"/>
+        <path class="pulsar-play" d="M66 36l17 11-17 11z"/>
+      </svg>
+      <span class="pulsar-splash-ring ring-one"></span>
+      <span class="pulsar-splash-ring ring-two"></span>
+    </div>
+    <div class="pulsar-splash-word">PULSAR</div>
+    <small class="pulsar-splash-sub">CENTRAL MUSICAL</small>
+    <div class="pulsar-splash-line"><i></i></div>
+  </div>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand"><span class="logo"><svg class="pulsar-symbol" viewBox="0 0 100 100" aria-hidden="true">
+  <path class="pulsar-pulse" d="M4 59h18l5-13 8 30 8-39 8 22h6"/>
+  <path class="pulsar-pmark" d="M49 82V23h22c15 0 24 9 24 21s-9 21-24 21H49"/>
+  <path class="pulsar-play" d="M66 36l17 11-17 11z"/>
+</svg></span><div><strong>PULSAR</strong><small>CRIADO POR GABRIEL MÜLLER</small></div></div>
+      <div class="status"><span class="dot"></span> PRONTO <button id="openSync" class="sync-top-button" title="Sincronização Pulsar">⇄</button><button id="fullscreenBtn" title="Tela cheia">⛶</button></div>
+    </header>
+
+    <main>
+      <section id="home" class="page active">
+        <div class="nexo-home">
+          <div class="home-command-head">
+            <div><small>CENTRAL PULSAR</small><h1>Ferramentas</h1></div>
+            <span><i></i>PRONTO</span>
+          </div>
+          <div class="tool-grid pulsar-tool-grid">
+            <button class="tool-tile tool-player" data-go="player" aria-label="Abrir Player">
+              <span class="tool-glyph"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="23"></circle><path d="M11 36h9l3-8 5 17 5-24 5 15h4"></path><path class="solid" d="M39 24l13 8-13 8z"></path></svg></span>
+              <span class="tool-copy"><small>ÁUDIO</small><b>Player</b></span>
+            </button>
+            <button class="tool-tile tool-metro" data-go="metronome" aria-label="Abrir Metrônomo">
+              <span class="tool-glyph"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M20 51h24L39 13H25z"></path><path d="M32 20l9 25"></path><path d="M24 44h16"></path><circle cx="32" cy="33" r="2"></circle></svg></span>
+              <span class="tool-copy"><small>TEMPO</small><b>Metrônomo</b></span>
+            </button>
+            <button class="tool-tile tool-drums" data-go="drums" aria-label="Abrir Drum Pad">
+              <span class="tool-glyph"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="11" y="11" width="17" height="17" rx="5"></rect><rect x="36" y="11" width="17" height="17" rx="5"></rect><rect x="11" y="36" width="17" height="17" rx="5"></rect><rect x="36" y="36" width="17" height="17" rx="5"></rect><path d="M5 32h8l3-6 4 12 4-6h5"></path></svg></span>
+              <span class="tool-copy"><small>RITMO</small><b>Drum</b></span>
+            </button>
+            <button class="tool-tile tool-pads" data-go="ambient" aria-label="Abrir Pads">
+              <span class="tool-glyph"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 21c8-9 16 9 24 0s16 9 24 0"></path><path d="M8 32c8-9 16 9 24 0s16 9 24 0"></path><path d="M8 43c8-9 16 9 24 0s16 9 24 0"></path><circle cx="32" cy="32" r="24"></circle></svg></span>
+              <span class="tool-copy"><small>ATMOSFERA</small><b>Pads</b></span>
+            </button>
+            <button id="openPulsarLibrary" class="tool-tile tool-library" type="button" aria-label="Abrir Biblioteca PULSAR">
+              <span class="tool-glyph"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="13" y="10" width="38" height="44" rx="9"></rect><path d="M22 22h20M22 31h20M22 40h13"></path><path class="solid" d="M39 37l8 5-8 5z"></path></svg></span>
+              <span class="tool-copy"><small>SONS OPCIONAIS</small><b>Biblioteca</b></span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="player" class="page">
+        <div class="player-head player-head-v16">
+          <button class="back">‹</button>
+          <div class="player-title-copy"><small>PULSAR AUDIO 2.1</small><h2>Player</h2><p>Sua música, simples e pronta para acompanhar você.</p></div>
+          <button id="minimizePagePlayer" class="player-tool-button player-minimize-button" type="button" title="Minimizar Player" aria-label="Minimizar Player">⌄</button>
+          <button id="toggleTrackSelection" class="player-select-button" type="button">SELECIONAR</button>
+          <button id="openEq" class="player-tool-button eq-shortcut" title="Equalizador">EQ</button>
+        </div>
+        <div class="player-search-v14">
+          <span>⌕</span><input id="songLibrarySearch" placeholder="Buscar qualquer música..." autocomplete="off"/><button id="clearPlayerSearch" class="search-clear" type="button" title="Limpar busca" hidden>×</button>
+          <button id="scanDeviceMusic" class="scan-pill">ATUALIZAR</button>
+          <button id="importPlayerFiles" class="file-pill player-import-native" type="button" title="Importar arquivos de áudio">＋ ARQUIVO</button><input id="songInput" class="player-file-fallback" type="file" accept="audio/*" multiple hidden />
+        </div>
+        <div class="player-native-status" id="playerNativeStatus"><i></i><div><b>PLAYER ANDROID</b><small>Pronto para tocar em segundo plano e na tela bloqueada</small></div><span id="playerEngineBadge">PRONTO</span></div>
+        <div class="player-tabs player-tabs-v16" id="playerTabs"><button class="active" data-view="tracks">Faixas</button><button data-view="playlists">Playlists</button><button data-view="folders">Pastas</button><button data-view="albums">Álbuns</button><button data-view="artists">Artistas</button></div>
+        <div id="playerFocusCard" class="player-focus-card" hidden>
+          <span class="player-focus-art"><svg class="pulsar-symbol" viewBox="0 0 100 100" aria-hidden="true">
+  <path class="pulsar-pulse" d="M4 59h18l5-13 8 30 8-39 8 22h6"/>
+  <path class="pulsar-pmark" d="M49 82V23h22c15 0 24 9 24 21s-9 21-24 21H49"/>
+  <path class="pulsar-play" d="M66 36l17 11-17 11z"/>
+</svg></span>
+          <button id="playerFocusOpen" class="player-focus-copy" type="button"><small>TOCANDO AGORA</small><b id="playerFocusTitle">Escolha uma música</b><span id="playerFocusMeta">Biblioteca local</span><span class="track-tech"><em id="playerFocusBpm">BPM —</em><em id="playerFocusKey">TOM —</em></span></button>
+          <button id="playerFocusPlay" class="player-focus-play" type="button">▶</button>
+        </div>
+        <div class="library-summary library-summary-v16"><div><strong id="libraryViewTitle">Todas as faixas</strong><small id="libraryViewSubtitle">Sua biblioteca musical neste aparelho</small></div><span id="libraryCount">0 MÚSICAS</span></div>
+        <div id="playerContextActions" class="player-context-actions" hidden></div>
+        <div id="smartCollections" class="smart-collections smart-v16"><button data-smart="favorites"><i>♥</i><span><b>Favoritas</b><small id="favoriteCount">0 músicas</small></span></button><button data-smart="recent"><i>◷</i><span><b>Recentes</b><small id="recentCount">0 músicas</small></span></button><button data-smart="added"><i>＋</i><span><b>Adicionadas</b><small>Biblioteca local</small></span></button></div>
+        <div id="selectionBar" class="selection-bar-v16" hidden><div><small>SELEÇÃO</small><b id="selectionCount">0 músicas</b></div><button id="selectionAddPlaylist" type="button">＋ PLAYLIST</button><button id="selectionCancel" type="button">CANCELAR</button></div>
+        <div class="player-tablet-stage">
+          <div class="player-tablet-library">
+            <div id="songList" class="music-library-list music-list-v16 empty">Toque em ATUALIZAR para carregar as músicas deste celular.</div>
+          </div>
+          <aside class="player-tablet-console" id="tabletPlayerConsole">
+            <div class="tablet-now-art"><svg class="pulsar-symbol" viewBox="0 0 100 100" aria-hidden="true">
+  <path class="pulsar-pulse" d="M4 59h18l5-13 8 30 8-39 8 22h6"/>
+  <path class="pulsar-pmark" d="M49 82V23h22c15 0 24 9 24 21s-9 21-24 21H49"/>
+  <path class="pulsar-play" d="M66 36l17 11-17 11z"/>
+</svg></div>
+            <small>AGORA NO PULSAR</small><h3 id="tabletNowTitle">Escolha uma música</h3><p id="tabletNowMeta">Biblioteca local</p>
+            <div class="tablet-now-controls"><button id="tabletPrev" type="button">│‹</button><button id="tabletPlay" class="tablet-main-play" type="button">▶</button><button id="tabletNext" type="button">›│</button></div>
+            <div class="tablet-now-sliders">
+              <label><span>VOLUME <b id="tabletVolumeValue">90%</b></span><input id="tabletVolume" type="range" min="0" max="1" step=".01" value=".9"></label>
+              <label><span>TOM <b id="tabletPitchValue">0 st</b></span><input id="tabletPitch" type="range" min="-6" max="6" step="1" value="0"></label>
+              <label><span>VELOCIDADE <b id="tabletSpeedValue">100%</b></span><input id="tabletSpeed" type="range" min=".5" max="1.5" step=".05" value="1"></label>
+            </div>
+            <div class="tablet-now-actions"><button id="tabletEq" type="button">EQ</button><button id="tabletQueue" type="button">FILA</button><button id="tabletLyrics" type="button">LETRA</button></div>
+          </aside>
+        </div>
+        <div class="player-legacy-controls" aria-hidden="true">
+          <h3 id="songTitle">Escolha uma música</h3><p id="songMeta">Biblioteca local</p><input id="songSeek" type="range" min="0" max="1000" value="0"><span id="currentTime">0:00</span><span id="duration">0:00</span><button id="prevSong">Anterior</button><button id="back10">−10</button><button id="playSong">Tocar</button><button id="forward10">+10</button><button id="nextSong">Próxima</button><input id="songVolume" type="range" min="0" max="1" step=".01" value=".9"><span id="volumeValue">90%</span><input id="pitch" type="range" min="-6" max="6" step="1" value="0"><span id="pitchValue">0 st</span><span id="keyResult">—</span><span id="bpmResult">—</span><button id="analyzeBtn">Analisar</button>
+        </div>
+      </section>
+
+      <section id="metronome" class="page">
+        <div class="page-title"><button class="back">‹</button><div><small>MÓDULO</small><h2>Metrônomo</h2></div><button id="tapTempo" class="outline">TAP</button></div>
+        <div class="metro-card">
+          <div class="bpm-display"><button id="bpmMinus">−</button><div><b id="bpmDisplay">120</b><small>BPM</small></div><button id="bpmPlus">+</button></div>
+          <input id="bpmRange" class="range" type="range" min="30" max="260" value="120" />
+          <div class="metro-audio-mix-v16">
+            <div class="metro-track-v16"><span>♪</span><div><small>MÚSICA DO PLAYER</small><b id="metroTrackName">Nenhuma música selecionada</b></div><button id="metroMusicPlay" type="button">▶</button></div>
+            <label class="metro-mix-control"><span><b>MÚSICA</b><em id="metroMusicVolumeValue">90%</em></span><input id="metroMusicVolume" class="range" type="range" min="0" max="1" step=".01" value=".9"></label>
+            <label class="metro-mix-control click-priority"><span><b>CLICK · PRIORIDADE</b><em id="metroClickVolumeValue">115%</em></span><input id="metroVolume" class="range" type="range" min="0" max="1.5" step=".01" value="1.15"></label>
+          </div>
+          <div class="accent-title"><div><small>PADRÃO DE ACENTO</small><b>Toque nas barras para mudar cada tempo</b></div><span>FORTE · MÉDIO · NORMAL · MUDO</span></div>
+          <div class="accent-sequencer" id="beatLights"></div>
+          <div class="control-grid">
+            <label>COMPASSO<select id="signature"><option>4/4</option><option>3/4</option><option>2/4</option><option>5/4</option><option>6/8</option><option>7/8</option></select></label>
+            <label>SOM<select id="clickSound"><option value="digital">Digital</option><option value="wood">Madeira</option><option value="soft">Suave</option><option value="bright">Brilhante</option></select></label>
+            <label>SUBDIVISÃO<select id="subdivision"><option value="1">Sem subdivisão</option><option value="2">Colcheias</option><option value="3">Tercinas</option><option value="4">Semicolcheias</option></select></label>
+          </div>
+          <button id="metroStart" class="big-action violet">▶ INICIAR METRÔNOMO</button>
+        </div>
+      </section>
+
+      <section id="drums" class="page">
+        <div class="page-title"><button class="back">‹</button><div><small>MÓDULO</small><h2>Drum Pad</h2></div><button id="editPads" class="outline">EDITAR</button></div>
+        <div class="drive-quickbar"><div><small>BIBLIOTECA PULSAR</small><b>Sons opcionais · uso offline</b></div><button id="openDriveDrums" type="button">ABRIR BIBLIOTECA</button></div>
+        <div id="drumBankTabs" class="drum-bank-tabs-v18"></div>
+        <div class="drum-master"><label>VOLUME <input id="drumVolume" class="range" type="range" min="0" max="1" step=".01" value=".9"></label><label>REVERB <input id="drumReverb" class="range" type="range" min="0" max="1" step=".01" value=".15"></label></div>
+        <div class="drum-bank-tools">
+          <div class="drum-bank-status"><small>BANCO DE SONS</small><b id="drumBankCount">6 PADS</b></div>
+          <button id="addDrumPad" class="outline">＋ NOVO PAD</button>
+          <button id="importDrumSounds" class="outline drum-import" type="button">⇧ IMPORTAR SONS</button><input id="drumBankFiles" class="native-file-fallback" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac,.flac" multiple>
+        </div>
+        <div class="drum-sync drum-sync-v14">
+          <div class="drum-tempo-box"><small>LOOP NO BPM</small><span><b id="drumBpmValue">120</b> BPM</span></div>
+          <div class="loop-rate-group" id="drumLoopRates" aria-label="Intervalo da repetição">
+            <button type="button" data-rate="0.25">¼</button><button type="button" data-rate="0.5">½</button><button type="button" data-rate="1" class="active">1</button><button type="button" data-rate="2">2</button><button type="button" data-rate="4">4</button>
+          </div>
+          <button id="drumTap" class="outline">TAP</button>
+        </div>
+        <div class="drum-loop-help">Escolha o intervalo acima e toque no <b>↻</b> de qualquer pad. Não precisa abrir Editar.</div>
+        <div id="drumGrid" class="drum-grid"></div>
+        <p class="hint">Importe vários sons de uma vez: cada arquivo vira um pad. Use o botão ↻ de cada pad para iniciar ou parar a repetição na hora.</p>
+      </section>
+
+      <section id="ambient" class="page">
+        <div class="page-title tonal-title-v15">
+          <button class="back">‹</button>
+          <div><small>MÓDULO</small><h2>Pads de Tonalidade</h2><p>Escolha um banco e toque diretamente pela tonalidade.</p></div>
+          <button id="stopAllPads" class="outline danger">PARAR</button>
+        </div>
+
+        <div class="drive-quickbar"><div><small>BIBLIOTECA PULSAR</small><b>Baixe somente os bancos que quiser</b></div><button id="openDrivePads" type="button">ABRIR BIBLIOTECA</button></div>
+
+        <div class="tonal-bank-panel">
+          <div class="tonal-bank-head">
+            <div class="tonal-bank-copy"><small>BANCO ATUAL</small><h3 id="ambientBankName">WARM</h3><span id="ambientBankProgress">0/12 notas configuradas</span></div>
+            <div class="tonal-bank-actions"><button id="newAmbientBank" type="button">＋ BANCO</button><button id="editAmbientBank" type="button">CONFIGURAR</button></div>
+          </div>
+          <div id="ambientBankTabs" class="tonal-bank-tabs"></div>
+          <div class="tonal-library-line"><span><b id="ambientLibraryCount">0</b> pads salvos na biblioteca local</span><small>Toque no ⚙ de uma nota para escolher o arquivo.</small></div>
+        </div>
+
+        <div class="tonal-controls-v15 tonal-controls-simple">
+          <label><span><b>VOLUME</b><em id="ambientValue">70%</em></span><input id="ambientVolume" type="range" min="0" max="1" step=".01" value=".7"></label>
+        </div>
+
+        <div class="tonal-live-head"><div><small>TONALIDADES</small><b>Até 2 camadas · entrada e saída suaves</b></div><span id="ambientReadyStatus">BANCO PRONTO</span></div>
+        <div id="noteGrid" class="tonal-note-grid"></div>
+        <div id="activeNotes" class="tonal-now-playing"><span>≋</span><div><small>CAMADAS ATIVAS</small><b>Nenhum pad tocando</b></div></div>
+        <p class="hint tonal-hint">Toque em duas tonalidades para criar uma camada. Ao tocar a terceira, a mais antiga sai suavemente.</p>
+
+        <input id="ambientPadFiles" class="native-file-fallback" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac,.flac" multiple>
+        <input id="ambientSinglePadFile" class="native-file-fallback" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac,.flac">
+      </section>
+
+      <section id="lyrics" class="page lyrics-page">
+        <div class="page-title lyrics-title-v14"><button class="back">‹</button><div><small>MÓDULO</small><h2>Letras</h2><p>Salve a letra uma vez e abra direto pelo Player.</p></div><button id="newSong" class="outline">+ NOVA</button></div>
+        <div class="lyrics-searchbar lyrics-search-v14"><input id="webSong" placeholder="Pesquisar letra na internet"><button id="searchLetras">ABRIR LETRAS.COM ↗</button></div>
+        <div class="lyrics-current-track" id="lyricsCurrentTrack"><span>♪</span><div><small>MÚSICA DO PLAYER</small><b id="lyricsTrackName">Nenhuma música selecionada</b></div><button id="useCurrentTrack" type="button">USAR</button></div>
+        <div class="setlist-layout setlist-v14">
+          <div class="lyrics-library-v14"><input id="setlistSearch" class="search" placeholder="Pesquisar nas letras salvas..."/><div id="setlistItems" class="setlist-items empty">Nenhuma letra salva.</div></div>
+          <article class="lyrics-panel lyrics-editor-v14"><small>EDITOR DE LETRA</small><input id="lyricTitle" placeholder="Nome da música"/><input id="lyricArtist" placeholder="Artista"/><textarea id="lyricText" placeholder="Cole ou escreva a letra aqui..."></textarea><div class="lyrics-actions"><button id="deleteLyric" class="danger-text">EXCLUIR</button><button id="saveLyric" class="big-action green">SALVAR LETRA</button></div></article>
+        </div>
+      </section>
+    </main>
+
+    <div id="miniPlayer" class="mini-player" hidden aria-label="Player flutuante">
+      <button id="miniDrag" class="mini-drag" type="button" title="Arrastar Player" aria-label="Arrastar Player"><span>⋮⋮</span></button>
+      <button id="miniOpen" class="mini-track" type="button" title="Abrir Player"><span class="mini-art"><svg class="pulsar-symbol" viewBox="0 0 100 100" aria-hidden="true">
+  <path class="pulsar-pulse" d="M4 59h18l5-13 8 30 8-39 8 22h6"/>
+  <path class="pulsar-pmark" d="M49 82V23h22c15 0 24 9 24 21s-9 21-24 21H49"/>
+  <path class="pulsar-play" d="M66 36l17 11-17 11z"/>
+</svg></span><span><b id="miniTitle">Nenhuma música</b><small id="miniMeta">PULSAR</small></span></button>
+      <button id="miniPlay" class="mini-play" type="button" title="Tocar/Pausar">▶</button>
+      <button id="miniQueue" class="mini-queue" type="button" title="Abrir fila">☷</button>
+      <button id="miniCollapse" class="mini-collapse" type="button" title="Recolher Player" aria-label="Recolher Player">−</button>
+      <i id="miniProgress" class="mini-progress"></i>
+    </div>
+    <nav class="dock"><button data-go="home" class="active">⌂<span>Início</span></button><button data-go="player">▶<span>Player</span></button><button data-go="metronome">♩<span>Tempo</span></button><button data-go="drums">◉<span>Drum</span></button><button data-go="ambient">≋<span>Pads</span></button></nav>
+  </div>
+  <dialog id="padEditor" class="pad-editor"><form method="dialog"><div class="editor-head"><div><small>CANAL DO PAD</small><h3 id="editorPadNumber">PAD 01</h3></div><button type="button" class="close-editor">×</button></div><label>NOME DO PAD<input id="padName" maxlength="24"></label><label>ARQUIVO DE ÁUDIO<div class="file-slot"><div><b id="padFileName">Nenhum arquivo</b><small>MP3, WAV, M4A, OGG, AAC ou FLAC</small></div><button id="choosePadFile" class="load-sample" type="button">ESCOLHER ARQUIVO</button><input id="padFile" class="native-file-fallback" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac,.flac"></div></label><div class="editor-preview"><button id="previewPad" type="button">▶ TESTAR</button><div class="mini-meter"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="editor-controls"><label>VOLUME INDIVIDUAL <span id="padVolumeValue">100%</span><input id="padVolume" class="range" type="range" min="0" max="1.5" step=".01" value="1"></label><label>COR DO LED<input id="padColor" type="color"></label></div><div class="editor-actions"><button id="deletePad" type="button" class="danger-text">EXCLUIR PAD</button><button id="clearPad" type="button" class="danger-text">REMOVER SOM</button><button id="savePad" type="button" class="big-action orange">SALVAR PAD</button></div></form></dialog>
+  <dialog id="lyricsViewer" class="lyrics-viewer"><div class="viewer-top"><div><small>LETRA SALVA</small><h2 id="viewerTitle"></h2><p id="viewerArtist"></p></div><button id="closeViewer">×</button></div><div id="viewerText" class="viewer-text"></div><div class="viewer-actions"><button id="viewerSmaller">A−</button><button id="viewerLarger">A+</button><button id="editFromViewer">EDITAR LETRA</button></div></dialog>
+  <dialog id="nowPlaying" class="now-playing now-playing-v14">
+    <div class="now-bg"></div>
+    <div class="now-content now-content-v14">
+      <div class="now-top"><button id="closeNow">⌄</button><div><b>TOCANDO AGORA</b><small id="nowSource">Biblioteca local</small></div><div class="now-top-actions"><button id="minimizeNow" class="now-minimize" type="button" title="Minimizar Player">—</button><button id="nowEq" class="now-eq-top">EQ</button></div></div>
+      <div class="now-hero-v14"><div class="now-art now-art-v14"><span><svg class="pulsar-symbol" viewBox="0 0 100 100" aria-hidden="true">
+  <path class="pulsar-pulse" d="M4 59h18l5-13 8 30 8-39 8 22h6"/>
+  <path class="pulsar-pmark" d="M49 82V23h22c15 0 24 9 24 21s-9 21-24 21H49"/>
+  <path class="pulsar-play" d="M66 36l17 11-17 11z"/>
+</svg></span><i></i><i></i><i></i><i></i><i></i></div><div class="now-info now-info-v14"><button id="favoriteSong" class="heart-button">♡</button><small id="nowArtist">Artista</small><h2 id="nowTitle">Escolha uma música</h2><p id="nowAlbum">Álbum</p><div class="now-track-tech"><span id="nowBpm">BPM —</span><span id="nowKey">TOM —</span></div></div></div>
+      <div class="now-timeline"><input id="nowSeek" type="range" min="0" max="1000" value="0"><div><span id="nowCurrent">0:00</span><span id="nowDuration">0:00</span></div></div>
+      <div class="now-transport now-transport-v14"><button id="shuffleSong" title="Embaralhar">⤨</button><button id="nowPrev">│‹</button><button id="nowPlay" class="now-main-play">▶</button><button id="nowNext">›│</button><button id="repeatSong" title="Repetir">↻</button></div>
+      <div class="now-quick-row-v14"><button id="nowBack10">−10s</button><button id="nowLyrics">LETRA</button><button id="openQueue">FILA</button><button id="nowForward10">+10s</button></div>
+      <details class="study-tools-v14"><summary>Ferramentas de estudo</summary><div class="now-shortcuts"><button id="loopA">MARCAR A</button><button id="loopB">MARCAR B</button><button id="nowAddPlaylist">+ PLAYLIST</button></div><div id="abLoopStatus" class="ab-loop-status">Loop A–B desligado</div></details>
+      <div class="now-mix now-mix-v14"><label>VOLUME <span id="nowVolumeValue">90%</span><input id="nowVolume" type="range" min="0" max="1" step=".01" value=".9"></label><label>TOM <span id="nowPitchValue">0 st</span><input id="nowPitch" type="range" min="-6" max="6" step="1" value="0"></label><label>VELOCIDADE <span id="nowSpeedValue">100%</span><input id="nowSpeed" type="range" min=".5" max="1.5" step=".05" value="1"></label></div>
+    </div>
+  </dialog>
+  <dialog id="equalizerDialog" class="equalizer-dialog equalizer-v14"><div class="eq-head"><button id="closeEq">‹</button><div><small>PROCESSAMENTO DE ÁUDIO</small><h2>Equalizador</h2><p id="eqStatusText">Aguardando música</p></div><label class="switch"><input id="eqEnabled" type="checkbox"><span></span></label></div><div id="eqPresets" class="eq-presets"><button data-preset="flat" class="active">Normal</button><button data-preset="worship">Louvor</button><button data-preset="voice">Voz</button><button data-preset="bass">Graves</button><button data-preset="bright">Brilhante</button></div><div id="eqBands" class="eq-bands"></div><div class="eq-effects"><label>GRAVES <span id="bassValue">0%</span><input id="bassBoost" type="range" min="0" max="100" value="0"></label><label>ESPAÇO <span id="reverbValue">0%</span><input id="playerReverb" type="range" min="0" max="100" value="0"></label><label>AMPLITUDE <span id="virtualizerValue">0%</span><input id="virtualizer" type="range" min="0" max="100" value="0"></label></div><p id="eqNotice">Inicie uma música e ative a chave acima. Ao mexer em qualquer banda, o EQ será ativado automaticamente.</p></dialog>
+  <dialog id="queueDialog" class="queue-dialog"><div class="queue-head"><div><small>ORDEM DE REPRODUÇÃO</small><h2>Fila</h2></div><button id="closeQueue">×</button></div><div id="queueList" class="queue-list empty">A fila está vazia.</div></dialog>
+  <dialog id="playlistDialog" class="playlist-dialog"><div class="queue-head"><div><small>ORGANIZAÇÃO</small><h2 id="playlistDialogTitle">Adicionar à playlist</h2></div><button id="closePlaylist">×</button></div><button id="createPlaylist" class="create-playlist">＋ CRIAR NOVA PLAYLIST</button><div id="playlistChoices" class="playlist-choices"></div></dialog>
+  <dialog id="newPlaylistDialog" class="playlist-dialog new-playlist-dialog"><div class="queue-head"><div><small>NOVA LISTA</small><h2>Criar playlist</h2></div><button id="closeNewPlaylist">×</button></div><label class="playlist-name-field">NOME DA PLAYLIST<input id="newPlaylistName" maxlength="50" placeholder="Ex.: Ensaio, Domingo, Favoritas"></label><div class="new-playlist-actions"><button id="cancelNewPlaylist" type="button">CANCELAR</button><button id="saveNewPlaylist" class="create-playlist" type="button">CRIAR PLAYLIST</button></div></dialog>
+  <dialog id="ambientBankEditor" class="ambient-bank-editor-v15">
+    <div class="ambient-editor-head"><div><small>BANCO DE TONALIDADES</small><h2 id="ambientBankEditorTitle">Configurar banco</h2></div><button id="closeAmbientBankEditor" type="button">×</button></div>
+    <label class="ambient-bank-name-field">NOME DO BANCO<input id="ambientBankNameInput" maxlength="24" placeholder="Ex.: WARM, REVERSE, SHIMMER"></label>
+    <div class="ambient-editor-tools"><button id="ambientAutoImport" type="button">＋ IMPORTAR E MAPEAR</button><button id="ambientAutoMapLibrary" type="button">MAPEAR BIBLIOTECA</button></div>
+    <p class="ambient-editor-help">Você também pode escolher manualmente um arquivo da sua biblioteca para cada nota.</p>
+    <div id="ambientBankAssignments" class="ambient-bank-assignments"></div>
+    <div class="ambient-editor-actions"><button id="deleteAmbientBank" type="button" class="danger-text">EXCLUIR BANCO</button><button id="duplicateAmbientBank" type="button">DUPLICAR</button><button id="saveAmbientBank" type="button" class="big-action green">SALVAR BANCO</button></div>
+  </dialog>
+
+  <dialog id="ambientLibraryDialog" class="ambient-library-dialog-v15">
+    <div class="ambient-editor-head"><div><small>BIBLIOTECA LOCAL</small><h2>Escolher Pad</h2><p id="ambientLibraryTarget">Selecione um arquivo</p></div><button id="closeAmbientLibrary" type="button">×</button></div>
+    <div class="ambient-library-tools"><input id="ambientLibrarySearch" placeholder="Buscar pad pelo nome..."><button id="ambientLibraryImport" type="button">＋ IMPORTAR</button></div>
+    <div id="ambientLibraryList" class="ambient-library-list-v15"></div>
+  </dialog>
+
+  <dialog id="syncDialog" class="nexo-sync-dialog">
+    <div class="sync-head"><div><small>PULSAR LIBRARY</small><h2>Biblioteca de sons</h2><p>Escolha bancos opcionais, baixe somente o que quiser e use tudo offline.</p></div><button id="closeSync" type="button">×</button></div>
+    <div class="sync-summary"><span class="sync-orbit">⇄</span><div><b id="syncDeviceLabel">Este dispositivo</b><small id="syncStatusText">Pronto para enviar ou receber.</small></div></div>
+    <section class="drive-sync-card" id="driveSyncCard">
+      <div class="drive-sync-head"><div><small>CATÁLOGO OPCIONAL · DOWNLOAD OFFLINE</small><h3>Biblioteca PULSAR</h3><p>Conecte a pasta de sons uma vez. O PULSAR encontra Pads e Drums e baixa apenas os bancos escolhidos.</p></div><span id="driveStatusDot" class="drive-status-dot"></span></div>
+      <div id="driveDisconnected" class="drive-disconnected"><button id="driveConnect" type="button" class="drive-main-action"><span>☁</span><div><b>CONECTAR PASTA PULSAR LIBRARY</b><small>Escolha a pasta raiz que contém PAD e DRUM PAD</small></div></button></div>
+      <div id="driveConnected" hidden>
+        <div class="drive-location"><span>☁</span><div><small>PASTA CONECTADA</small><b id="driveFolderName">PULSAR LIBRARY</b><em id="driveConfigState">Verificando configuração…</em></div><button id="driveDisconnect" type="button">DESCONECTAR</button></div>
+        <div class="drive-config-actions"><button id="drivePushConfig" type="button"><b>↑ SALVAR CONFIGURAÇÃO</b><small>Celular → Drive</small></button><button id="drivePullConfig" type="button"><b>↓ RESTAURAR CONFIGURAÇÃO</b><small>Drive → este aparelho</small></button><button id="driveRefresh" type="button"><b>↻ ATUALIZAR BIBLIOTECA</b><small>Ler Pads e Drums</small></button></div>
+        <div id="driveProgressWrap" class="drive-progress" hidden><div><b id="driveProgressText">Preparando…</b><small id="driveProgressMeta"></small></div><span><i id="driveProgressBar"></i></span></div>
+        <div class="drive-library-section"><div class="drive-library-title"><div><small>PADS MUSICAIS</small><b>Bancos no Drive</b></div><span id="drivePadCount">0</span></div><div id="drivePadBanks" class="drive-bank-list"><p>Toque em atualizar biblioteca.</p></div></div>
+        <div class="drive-library-section"><div class="drive-library-title"><div><small>DRUMS</small><b>Bancos no Drive</b></div><span id="driveDrumCount">0</span></div><div id="driveDrumBanks" class="drive-bank-list"><p>Toque em atualizar biblioteca.</p></div></div>
+      </div>
+    </section>
+
+    <div class="sync-primary-actions"><button id="syncSend" type="button" class="sync-action send"><span>↑</span><div><b>ENVIAR DESTE PULSAR</b><small>Compartilhar configurações + Pads/Drums</small></div></button><button id="syncReceive" type="button" class="sync-action receive"><span>↓</span><div><b>RECEBER DE OUTRO PULSAR</b><small>Procurar aparelhos nesta rede</small></div></button></div>
+    <section id="syncSharePanel" class="sync-panel" hidden><div><small>TRANSFERÊNCIA ATIVA</small><h3 id="syncShareName" >PULSAR</h3><p>Mantenha esta tela aberta no aparelho que está enviando.</p></div><div class="sync-code"><small>CÓDIGO</small><b id="syncShareCode">----</b></div><div class="sync-address"><small>ENDEREÇO DIRETO</small><b id="syncShareAddress">Obtendo IP...</b><span>Use este endereço no tablet caso ele não encontre o celular automaticamente.</span></div><div class="sync-transfer-meta" id="syncShareMeta"></div><button id="syncStopShare" type="button">PARAR COMPARTILHAMENTO</button></section>
+    <section id="syncReceivePanel" class="sync-panel" hidden><div class="sync-panel-title"><div><small>NA MESMA REDE</small><h3>Pulsars encontrados</h3></div><button id="syncRefreshPeers" type="button">ATUALIZAR</button></div><div id="syncPeerList" class="sync-peer-list"><p>Toque em atualizar para procurar.</p></div><div class="sync-manual"><small>NÃO APARECEU?</small><b>Conectar pelo endereço</b><p>Digite o IP:porta mostrado no celular que está enviando.</p><div><input id="syncManualAddress" inputmode="decimal" autocomplete="off" placeholder="192.168.0.10:45231"><button id="syncManualConnect" type="button">CONECTAR</button></div></div></section>
+    <div class="sync-backup-row"><button id="syncExportBackup" type="button"><b>EXPORTAR BACKUP</b><small>Salvar arquivo .nexo</small></button><button id="syncImportBackup" type="button"><b>IMPORTAR BACKUP</b><small>Restaurar arquivo .nexo</small></button></div>
+    <p class="sync-footnote">O Drive é apenas a biblioteca. Para tocar em tempo real, Pads e Drums são copiados para o armazenamento local do aparelho antes do uso. A transferência Wi‑Fi continua disponível como alternativa.</p>
+  </dialog>
+
+  <dialog id="syncCodeDialog" class="sync-code-dialog">
+    <div class="sync-code-card"><small>CONECTAR AO PULSAR</small><h3 id="syncCodePeerName">Outro dispositivo</h3><p>Digite o código de 4 números exibido no aparelho que está enviando.</p><input id="syncCodeInput" inputmode="numeric" maxlength="4" pattern="[0-9]*" placeholder="0000"><div id="syncReceiveProgressWrap" class="sync-receive-progress" hidden><div><b id="syncReceiveProgressText">Conectando…</b><small id="syncReceiveProgressBytes"></small></div><span><i id="syncReceiveProgressBar"></i></span></div><div><button id="syncCodeCancel" type="button">CANCELAR</button><button id="syncCodeConfirm" type="button">RECEBER</button></div></div>
+  </dialog>
+
+  <dialog id="syncFirstRun" class="sync-first-run">
+    <div class="first-run-card"><span class="first-run-mark"><svg class="pulsar-symbol" viewBox="0 0 100 100" aria-hidden="true">
+  <path class="pulsar-pulse" d="M4 59h18l5-13 8 30 8-39 8 22h6"/>
+  <path class="pulsar-pmark" d="M49 82V23h22c15 0 24 9 24 21s-9 21-24 21H49"/>
+  <path class="pulsar-play" d="M66 36l17 11-17 11z"/>
+</svg></span><small>PULSAR · NOVO DISPOSITIVO</small><h2>Como você quer começar?</h2><p>Se você já usa o Pulsar em outro aparelho, pode restaurar pelo Google Drive ou copiar diretamente pela mesma rede Wi‑Fi.</p><button id="firstRunDrive" type="button" class="primary">☁ RESTAURAR PELO DRIVE</button><button id="firstRunCopy" type="button">⇄ COPIAR PELA REDE LOCAL</button><button id="firstRunNew" type="button">CONFIGURAR COMO NOVO</button></div>
+  </dialog>
+
+  <div id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
