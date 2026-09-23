@@ -7,6 +7,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(MediaLibraryPlugin.class);
+        registerPlugin(AudioAnalyzerPlugin.class);
         registerPlugin(NexoSyncPlugin.class);
         registerPlugin(NexoDrivePlugin.class);
         super.onCreate(savedInstanceState);
