@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "private": true,
   "scripts": {
-    "check": "node --check app.js && node --check player-v21-upgrade.js && node --check pulsar-drive-v22.js && node --check pulsar-v23.js && node --check pulsar-v23-safety.js && node --check pulsar-v24.js && node --check pulsar-v25-premium.js && node --check pulsar-v26-pixel.js && node scripts/check-project.mjs",
+    "check": "node --check app.js && node --check player-v21-upgrade.js && node --check pulsar-drive-v22.js && node --check pulsar-v23.js && node --check pulsar-v23-safety.js && node --check pulsar-v24.js && node --check pulsar-v25-premium.js && node --check pulsar-v26-pixel.js && node --check pulsar-v26-fix.js && node scripts/check-project.mjs",
     "prepare:web": "node scripts/prepare-web.mjs",
     "android:add": "npm run prepare:web && npx cap add android",
     "android:sync": "npm run prepare:web && npx cap sync android",
