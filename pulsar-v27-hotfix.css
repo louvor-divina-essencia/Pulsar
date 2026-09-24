@@ -1,0 +1,112 @@
+/* PULSAR 2.7.1 — hotfix do navegador de samples
+   Evita que elementos marcados como hidden sejam forçados a aparecer pelo CSS
+   e impede o painel de nome da coleção de esmagar a lista de bancos/samples. */
+
+#p27LocalActions[hidden],
+#p27ImportNaming[hidden],
+#pulsarDriveSoundPicker .drive-offline-choice[hidden] {
+  display:none !important;
+}
+
+#pulsarDriveSoundPicker .drive-picker-shell {
+  position:relative !important;
+}
+
+/* O formulário de nome vira uma sobreposição temporária e não ocupa uma linha
+   extra do grid do navegador. Assim bancos e lista continuam com altura útil. */
+#p27ImportNaming:not([hidden]) {
+  position:absolute !important;
+  z-index:80 !important;
+  left:20px !important;
+  right:20px !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  margin:0 !important;
+  max-height:calc(100% - 40px) !important;
+  overflow:auto !important;
+  box-shadow:0 30px 90px rgba(0,0,0,.72),0 0 0 999px rgba(1,5,12,.56) !important;
+}
+
+/* Bancos sempre permanecem acessíveis e roláveis horizontalmente. */
+#pulsarDriveSoundPicker .drive-picker-banks {
+  position:relative !important;
+  z-index:4 !important;
+  flex-shrink:0 !important;
+  scroll-snap-type:x proximity !important;
+}
+#pulsarDriveSoundPicker .drive-picker-banks > button {
+  scroll-snap-align:start !important;
+}
+
+/* A lista precisa receber o espaço restante do modal. */
+#pulsarDriveSoundPicker .drive-picker-list {
+  min-height:120px !important;
+  position:relative !important;
+  z-index:2 !important;
+  -webkit-overflow-scrolling:touch !important;
+}
+
+/* O rodapé não deve cobrir o último banco/sample. */
+#pulsarDriveSoundPicker .drive-picker-shell > footer {
+  position:relative !important;
+  z-index:6 !important;
+}
+
+@media (max-width:600px) {
+  #pulsarDriveSoundPicker {
+    height:92dvh !important;
+    max-height:92dvh !important;
+  }
+
+  #pulsarDriveSoundPicker .drive-picker-shell {
+    grid-template-rows:auto auto auto auto auto minmax(150px,1fr) auto !important;
+  }
+
+  /* DRIVE: ações de importação local realmente desaparecem. */
+  #p27LocalActions[hidden],
+  #p27ImportNaming[hidden],
+  #pulsarDriveSoundPicker .drive-offline-choice[hidden] {
+    display:none !important;
+  }
+
+  /* CELULAR: controles compactos para sobrar espaço para os arquivos. */
+  .p27-local-actions:not([hidden]) {
+    margin:0 14px 8px !important;
+    padding:10px !important;
+    grid-template-columns:minmax(0,1fr) auto !important;
+    gap:8px !important;
+  }
+  .p27-local-actions:not([hidden]) > div {
+    grid-column:auto !important;
+  }
+  .p27-local-actions:not([hidden]) #p27ImportSelected {
+    grid-column:1 / -1 !important;
+    width:100% !important;
+  }
+  .p27-local-actions:not([hidden]) #p27ImportFiles {
+    position:absolute !important;
+    right:24px !important;
+    top:auto !important;
+    margin-top:-47px !important;
+    max-width:150px !important;
+  }
+
+  #p27ImportNaming:not([hidden]) {
+    left:14px !important;
+    right:14px !important;
+    top:52% !important;
+    border-radius:22px !important;
+  }
+
+  #pulsarDriveSoundPicker .drive-picker-banks {
+    padding-left:14px !important;
+    padding-right:14px !important;
+    min-height:48px !important;
+  }
+  #pulsarDriveSoundPicker .drive-picker-list {
+    padding-left:14px !important;
+    padding-right:14px !important;
+    padding-bottom:18px !important;
+    min-height:160px !important;
+  }
+}
