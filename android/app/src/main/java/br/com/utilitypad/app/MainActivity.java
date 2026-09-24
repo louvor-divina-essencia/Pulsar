@@ -11,6 +11,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(NexoSyncPlugin.class);
         registerPlugin(NexoDrivePlugin.class);
         registerPlugin(PulsarDriveAudioPlugin.class);
+        registerPlugin(SampleLibraryPlugin.class);
         super.onCreate(savedInstanceState);
     }
 }
