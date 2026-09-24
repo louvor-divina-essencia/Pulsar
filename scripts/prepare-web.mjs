@@ -4,7 +4,7 @@ import path from 'node:path';
 const root = process.cwd();
 const web = path.join(root, 'web');
 fs.mkdirSync(web, { recursive: true });
-for (const file of ['index.html','styles.css','pulsar-2.1.css','app.js','manifest.json','player-v21-upgrade.js','player-v21-upgrade.css','pulsar-drive-v22.js','pulsar-layout-v22.css','pulsar-v23.js','pulsar-v23.css','pulsar-v23-safety.js','pulsar-v24.js','pulsar-v24.css','pulsar-v25-premium.js','pulsar-v25-premium.css']) {
+for (const file of ['index.html','styles.css','pulsar-2.1.css','app.js','manifest.json','player-v21-upgrade.js','player-v21-upgrade.css','pulsar-drive-v22.js','pulsar-layout-v22.css','pulsar-v23.js','pulsar-v23.css','pulsar-v23-safety.js','pulsar-v24.js','pulsar-v24.css','pulsar-v25-premium.js','pulsar-v25-premium.css','pulsar-v26-pixel.js','pulsar-v26-pixel.css']) {
   const src = path.join(root, file);
   const dst = path.join(web, file);
   fs.copyFileSync(src, dst);
@@ -12,8 +12,8 @@ for (const file of ['index.html','styles.css','pulsar-2.1.css','app.js','manifes
 
 const indexPath = path.join(web, 'index.html');
 let html = fs.readFileSync(indexPath, 'utf8');
-html = html.replace('</head>', '  <link rel="stylesheet" href="player-v21-upgrade.css">\n  <link rel="stylesheet" href="pulsar-layout-v22.css">\n  <link rel="stylesheet" href="pulsar-v23.css">\n  <link rel="stylesheet" href="pulsar-v24.css">\n  <link rel="stylesheet" href="pulsar-v25-premium.css">\n</head>');
-html = html.replace('<script src="app.js"></script>', '<script src="app.js"></script>\n  <script src="player-v21-upgrade.js"></script>\n  <script src="pulsar-drive-v22.js"></script>\n  <script src="pulsar-v23.js"></script>\n  <script src="pulsar-v23-safety.js"></script>\n  <script src="pulsar-v24.js"></script>\n  <script src="pulsar-v25-premium.js"></script>');
+html = html.replace('</head>', '  <link rel="stylesheet" href="player-v21-upgrade.css">\n  <link rel="stylesheet" href="pulsar-layout-v22.css">\n  <link rel="stylesheet" href="pulsar-v23.css">\n  <link rel="stylesheet" href="pulsar-v24.css">\n  <link rel="stylesheet" href="pulsar-v25-premium.css">\n  <link rel="stylesheet" href="pulsar-v26-pixel.css">\n</head>');
+html = html.replace('<script src="app.js"></script>', '<script src="app.js"></script>\n  <script src="player-v21-upgrade.js"></script>\n  <script src="pulsar-drive-v22.js"></script>\n  <script src="pulsar-v23.js"></script>\n  <script src="pulsar-v23-safety.js"></script>\n  <script src="pulsar-v24.js"></script>\n  <script src="pulsar-v25-premium.js"></script>\n  <script src="pulsar-v26-pixel.js"></script>');
 fs.writeFileSync(indexPath, html, 'utf8');
 
 const assetsSrc = path.join(root, 'assets');
