@@ -4,7 +4,7 @@ import path from 'node:path';
 const root = process.cwd();
 const web = path.join(root, 'web');
 fs.mkdirSync(web, { recursive: true });
-for (const file of ['index.html','styles.css','pulsar-2.1.css','app.js','manifest.json','player-v21-upgrade.js','player-v21-upgrade.css','pulsar-drive-v22.js','pulsar-layout-v22.css','pulsar-v23.js','pulsar-v23.css','pulsar-v23-safety.js','pulsar-v24.js','pulsar-v24.css','pulsar-v25-premium.js','pulsar-v25-premium.css','pulsar-v26-pixel.js','pulsar-v26-pixel.css','pulsar-v26-fix.js','pulsar-v27-samples.js','pulsar-v27-samples.css','pulsar-v27-hotfix.css']) {
+for (const file of ['index.html','styles.css','pulsar-2.1.css','app.js','app-core-v21.js','drum-pad-v22.js','manifest.json','player-v21-upgrade.js','player-v21-upgrade.css','pulsar-drive-v22.js','pulsar-layout-v22.css','pulsar-v23.js','pulsar-v23.css','pulsar-v23-safety.js','pulsar-v24.js','pulsar-v24.css','pulsar-v25-premium.js','pulsar-v25-premium.css','pulsar-v26-pixel.js','pulsar-v26-pixel.css','pulsar-v26-fix.js','pulsar-v27-samples.js','pulsar-v27-samples.css','pulsar-v27-hotfix.css']) {
   const src = path.join(root, file);
   const dst = path.join(web, file);
   fs.copyFileSync(src, dst);
