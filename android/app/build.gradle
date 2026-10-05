@@ -8,7 +8,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode providers.gradleProperty('pulsarVersionCode').getOrElse('21001').toInteger()
-        versionName "2.1.0"
+        versionName "2.9.0"
         manifestPlaceholders = [pulsarAppLabel: "PULSAR"]
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
@@ -21,7 +21,7 @@ android {
         debug {
             applicationIdSuffix ".preview"
             versionNameSuffix "-teste"
-            manifestPlaceholders = [pulsarAppLabel: "PULSAR Teste"]
+            manifestPlaceholders = [pulsarAppLabel: "PULSAR"]
         }
         release {
             minifyEnabled false
