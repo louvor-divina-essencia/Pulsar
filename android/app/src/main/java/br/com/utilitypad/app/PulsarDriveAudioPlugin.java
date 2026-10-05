@@ -13,9 +13,12 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 @CapacitorPlugin(name = "PulsarDriveAudio")
 public class PulsarDriveAudioPlugin extends Plugin {
@@ -127,14 +130,118 @@ public class PulsarDriveAudioPlugin extends Plugin {
     }
 
     @PluginMethod
+    public void cacheUrl(PluginCall call) {
+        final String urlValue = call.getString("url");
+        final String sourceId = call.getString("sourceId", "bridge-audio");
+        final String name = call.getString("name", "audio");
+        final String kind = call.getString("kind", "bridge");
+        final String bankName = call.getString("bankName", "Ponte");
+        final Double expectedValue = call.getDouble("size", 0.0);
+        final long expectedSize = expectedValue == null ? 0L : Math.max(0L, expectedValue.longValue());
+
+        new Thread(() -> {
+            HttpURLConnection connection = null;
+            try {
+                if (urlValue == null || urlValue.trim().isEmpty()) {
+                    throw new IllegalArgumentException("Endereço do arquivo ausente");
+                }
+                URL url = new URL(urlValue);
+                String protocol = url.getProtocol() == null ? "" : url.getProtocol().toLowerCase();
+                boolean localHttp = "http".equals(protocol) && (
+                    "127.0.0.1".equals(url.getHost()) ||
+                    "localhost".equalsIgnoreCase(url.getHost())
+                );
+                if (!"https".equals(protocol) && !localHttp) {
+                    throw new IllegalArgumentException("A Ponte precisa usar HTTPS");
+                }
+
+                File root = new File(getContext().getFilesDir(), "pulsar_bridge_offline");
+                File bank = new File(new File(root, safe(kind)), safe(bankName));
+                if (!bank.exists() && !bank.mkdirs()) {
+                    throw new IllegalStateException("Não foi possível criar o armazenamento da Ponte");
+                }
+
+                String filename = Integer.toHexString(sourceId.hashCode()) + "-" + safeFile(name);
+                File target = new File(bank, filename);
+                if (target.exists() && target.length() > 0 && (expectedSize <= 0 || target.length() == expectedSize)) {
+                    JSObject cached = new JSObject();
+                    cached.put("cached", true);
+                    cached.put("reused", true);
+                    cached.put("fileUri", Uri.fromFile(target).toString());
+                    cached.put("bytes", target.length());
+                    cached.put("sourceId", sourceId);
+                    cached.put("name", name);
+                    call.resolve(cached);
+                    return;
+                }
+
+                File temp = new File(bank, filename + ".download");
+                if (temp.exists()) temp.delete();
+
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setConnectTimeout(15000);
+                connection.setReadTimeout(60000);
+                connection.setInstanceFollowRedirects(true);
+                connection.setRequestProperty("Accept", "audio/*,application/octet-stream;q=0.9,*/*;q=0.1");
+                connection.setRequestProperty("User-Agent", "PULSAR-Android/2.8");
+                int status = connection.getResponseCode();
+                if (status < 200 || status >= 300) {
+                    throw new IllegalStateException("A Ponte respondeu HTTP " + status);
+                }
+
+                long copied = 0;
+                try (InputStream raw = connection.getInputStream();
+                     InputStream input = new BufferedInputStream(raw, 256 * 1024);
+                     FileOutputStream output = new FileOutputStream(temp, false)) {
+                    byte[] buffer = new byte[256 * 1024];
+                    int read;
+                    while ((read = input.read(buffer)) != -1) {
+                        output.write(buffer, 0, read);
+                        copied += read;
+                    }
+                    output.flush();
+                }
+
+                if (copied <= 0) throw new IllegalStateException("A Ponte retornou um arquivo vazio");
+                if (expectedSize > 0 && copied != expectedSize) {
+                    throw new IllegalStateException("Download incompleto: esperado " + expectedSize + " bytes, recebido " + copied);
+                }
+                if (target.exists() && !target.delete()) {
+                    throw new IllegalStateException("Não foi possível atualizar o arquivo local");
+                }
+                if (!temp.renameTo(target)) {
+                    throw new IllegalStateException("Não foi possível finalizar o download");
+                }
+
+                JSObject out = new JSObject();
+                out.put("cached", true);
+                out.put("reused", false);
+                out.put("fileUri", Uri.fromFile(target).toString());
+                out.put("bytes", target.length());
+                out.put("sourceId", sourceId);
+                out.put("name", name);
+                call.resolve(out);
+            } catch (Exception error) {
+                call.reject("Não foi possível baixar este áudio da Ponte: " + friendly(error), error);
+            } finally {
+                if (connection != null) connection.disconnect();
+            }
+        }, "PULSAR-Bridge-Cache").start();
+    }
+
+    @PluginMethod
     public void removeCached(PluginCall call) {
         String fileUri = call.getString("fileUri");
         boolean removed = false;
         try {
             if (fileUri != null && fileUri.startsWith("file:")) {
                 File file = new File(Uri.parse(fileUri).getPath());
-                File root = new File(getContext().getFilesDir(), "pulsar_drive_offline");
-                if (file.getCanonicalPath().startsWith(root.getCanonicalPath())) removed = !file.exists() || file.delete();
+                File driveRoot = new File(getContext().getFilesDir(), "pulsar_drive_offline");
+                File bridgeRoot = new File(getContext().getFilesDir(), "pulsar_bridge_offline");
+                String candidate = file.getCanonicalPath();
+                boolean allowed = candidate.startsWith(driveRoot.getCanonicalPath()) ||
+                    candidate.startsWith(bridgeRoot.getCanonicalPath());
+                if (allowed) removed = !file.exists() || file.delete();
             }
         } catch (Exception ignored) {}
         call.resolve(new JSObject().put("removed", removed));
