@@ -171,14 +171,14 @@ jobs:
       - name: Preparar APK e checksum
         run: |
           mkdir -p dist
-          cp android/app/build/outputs/apk/debug/app-debug.apk dist/PULSAR-2.9-IGREJA.apk
+          cp android/app/build/outputs/apk/debug/app-debug.apk dist/PULSAR-2.9.1-IGREJA.apk
           cd dist
-          sha256sum PULSAR-2.9-IGREJA.apk > SHA256SUMS.txt
+          sha256sum PULSAR-2.9.1-IGREJA.apk > SHA256SUMS.txt
 
       - name: Disponibilizar APK
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: PULSAR-2.9-IGREJA-${{ github.run_number }}
+          name: PULSAR-2.9.1-IGREJA-${{ github.run_number }}
           path: dist/
           if-no-files-found: error
           retention-days: 14
